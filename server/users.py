@@ -24,10 +24,15 @@ class UsersResource(Resource):
         return self
 
     def render_POST(self, request):
-        res = UsersResource()
-        res.location_query = request.uri_query
-        res.payload = request.payload
+        res = table.put_item(
+            Item = json.loads(request.payload)
+        )
         return res
 
     def render_DELETE(self, request):
+        table.delete_item(
+            Key = {
+                'UID': request.uri_query
+            }
+        )
         return True
